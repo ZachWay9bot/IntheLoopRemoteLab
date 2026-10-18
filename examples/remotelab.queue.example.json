@@ -1,0 +1,19 @@
+{
+  "queue": {
+    "repo": "OWNER/PRIVATE_QUEUE_REPO",
+    "issue": 1,
+    "operator": "OWNER"
+  },
+  "poll_seconds": 8,
+  "state_file": "runtime/queue_state.json",
+  "audit_file": "runtime/audit.jsonl",
+  "devices": {
+    "simulator": {
+      "enabled": true
+    },
+    "xbot_readonly": {
+      "enabled": false,
+      "port": "COM9"
+    }
+  }
+}
