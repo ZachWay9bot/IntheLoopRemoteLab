@@ -8,11 +8,11 @@ Ein Queue-Kommentar beginnt exakt mit:
 REMOTELAB-CMD/1
 ```
 
-Direkt danach folgt ein JSON-Objekt:
+Danach folgt ein JSON-Objekt:
 
 ```json
 {
-  "id": "sim-identify-001",
+  "id": "job-001",
   "device": "simulator",
   "operation": "identify",
   "args": {}
@@ -37,36 +37,23 @@ gefolgt von einem kompakten JSON-Ergebnis.
 - Der Kommentar-Cursor wird vor der Geraeteoperation persistent gespeichert.
 - Ein laufender Job wird als `in_flight` gespeichert.
 - Wird der Agent waehrend eines laufenden Jobs beendet, wird dieser Job beim Neustart nicht automatisch wiederholt.
-- Stattdessen wird ein Ergebnis mit `status=execution-uncertain` erzeugt. Fuer einen erneuten Lauf ist eine neue Job-ID erforderlich.
+- Stattdessen wird `status=execution-uncertain` gemeldet.
+- Fuer einen erneuten Lauf ist eine neue Job-ID erforderlich.
 
-Damit bleibt der Transport auch fuer spaetere Hardware-Schreiboperationen at-most-once.
+Damit bleibt der Transport fuer spaetere Hardware-Schreiboperationen at-most-once.
 
-## v0.4.1 Operationen
-
-Der Core akzeptiert derzeit nur:
+## Aktuell freigegebene Core-Operationen
 
 - `identify`
 - `diagnose`
 
-Andere Operationen werden vom Core abgewiesen.
+Weitere Operationen werden erst ueber Policies freigegeben.
 
-## Beispiel Simulator
-
-```text
-REMOTELAB-CMD/1
-{"id":"sim-001","device":"simulator","operation":"diagnose","args":{}}
-```
-
-## Beispiel XBOT read-only
+## Beispiel
 
 ```text
 REMOTELAB-CMD/1
-{"id":"xbot-id-001","device":"xbot_readonly","operation":"identify","args":{}}
+{"id":"probe-001","device":"simulator","operation":"diagnose","args":{}}
 ```
 
-oder:
-
-```text
-REMOTELAB-CMD/1
-{"id":"xbot-diag-001","device":"xbot_readonly","operation":"diagnose","args":{}}
-```
+Der Device-Name bezeichnet nur den geladenen Adapter. Das Queue-Protokoll selbst kennt keine geraetespezifische Logik.
