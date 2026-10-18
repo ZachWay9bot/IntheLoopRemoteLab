@@ -4,6 +4,16 @@ import json
 from pathlib import Path
 
 
+DEFAULT_ADAPTERS = [
+    {
+        "module": "remotelab.adapters.simulator",
+        "class": "SimulatorAdapter",
+        "enabled": True,
+        "args": {},
+    }
+]
+
+
 def load_config(path: str | Path) -> dict:
     path = Path(path)
     with path.open("r", encoding="utf-8") as handle:
@@ -31,5 +41,9 @@ def load_config(path: str | Path) -> dict:
     cfg.setdefault("poll_seconds", 8)
     cfg.setdefault("state_file", "runtime/queue_state.json")
     cfg.setdefault("audit_file", "runtime/audit.jsonl")
-    cfg.setdefault("devices", {"simulator": {"enabled": True}})
+    cfg.setdefault("adapters", list(DEFAULT_ADAPTERS))
+
+    if not isinstance(cfg["adapters"], list):
+        raise ValueError("adapters must be a list")
+
     return cfg
