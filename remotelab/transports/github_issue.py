@@ -57,10 +57,8 @@ def format_result(obj: dict) -> str:
         for key in ("type", "id", "device", "operation", "ok", "duration_s", "error")
         if key in obj
     }
-    slim["error"] = (
-        str(slim.get("error") or "result too large")
-        + " [full result stored locally]"
-    )
+    error = str(slim.get("error") or "result too large")
+    slim["error"] = error[:2000] + " [full result stored locally]"
     return RESULT_PREFIX + json.dumps(
         slim, ensure_ascii=False, separators=(",", ":"), sort_keys=True
     )
