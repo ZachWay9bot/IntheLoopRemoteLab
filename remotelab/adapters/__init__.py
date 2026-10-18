@@ -1,11 +1,10 @@
 from .base import DeviceAdapter
+from .loader import load_adapter, load_adapters
 from .simulator import SimulatorAdapter
-from .xbot_legacy import XbotLegacyAdapter
-from .xbot_readonly import XbotReadOnlyAdapter
 
 __all__ = [
     "DeviceAdapter",
     "SimulatorAdapter",
-    "XbotLegacyAdapter",
-    "XbotReadOnlyAdapter",
+    "load_adapter",
+    "load_adapters",
 ]
