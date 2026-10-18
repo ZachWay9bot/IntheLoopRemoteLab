@@ -1,11 +1,12 @@
 [project]
 name = "remotelab"
-version = "0.4.0.dev0"
+version = "0.4.1.dev0"
 description = "Generic hardware-in-the-loop agent core"
 requires-python = ">=3.10"
 
 [project.optional-dependencies]
 xbot = ["pyserial>=3.5"]
+credentials = ["keyring>=24"]
 
 [tool.unittest]
 start-directory = "tests"
