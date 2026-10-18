@@ -1,10 +1,12 @@
 # Neues Geraet an RemoteLab anbinden
 
-## Minimaler Adapter
+## Adapter implementieren
 
-Ein neuer Adapter erbt von `DeviceAdapter` und implementiert:
+Ein Adapter erbt von `DeviceAdapter`:
 
 ```python
+from remotelab.adapters.base import DeviceAdapter
+
 class MyAdapter(DeviceAdapter):
     name = "my_device"
 
@@ -15,27 +17,34 @@ class MyAdapter(DeviceAdapter):
         ...
 ```
 
-Damit kann das Geraet im ersten Schritt nur gelesen werden.
+## Konfiguration
+
+Der Core braucht keine Codeaenderung:
+
+```json
+{
+  "module": "my_package.my_adapter",
+  "class": "MyAdapter",
+  "enabled": true,
+  "args": {
+    "port": "COM4"
+  }
+}
+```
 
 ## Schreiboperationen
 
-`flash()` und `run_test()` bleiben in der Basisklasse gesperrt. Ein Projekt darf diese Funktionen erst ueberschreiben, wenn:
+`flash()` und `run_test()` bleiben in der Basisklasse gesperrt, bis der Adapter einen validierten Schreibpfad besitzt.
 
-1. Recovery geklaert ist
-2. Image-/Identity-Pruefung existiert
-3. Offline-/Mock-Tests vorhanden sind
-4. Hardware-Preflight definiert ist
-5. Audit und Fehlerpfad getestet sind
+Vor einer Freigabe sollten mindestens vorhanden sein:
+
+1. Recovery-Strategie
+2. Image- oder Identity-Pruefung
+3. Offline- und Mock-Tests
+4. Hardware-Preflight
+5. Audit- und Fehlerpfad
+6. klare Grenzen fuer aktive Operationen
 
 ## Transport unabhaengig halten
 
-Ein Adapter darf nicht voraussetzen, dass Jobs ueber GitHub kommen. Derselbe Adapter soll spaeter mit lokalem Transport, GitHub-Issue-Transport oder anderer Steuerung funktionieren.
-
-## Beispiel-Ziele
-
-- ESP32 ueber esptool
-- STM32 ueber ST-Link oder eigenen Bootloader
-- RP2040 ueber UF2/PicoProbe
-- serielle Messgeraete
-- programmierbare Netzteile
-- Oszilloskope mit Remote-Schnittstelle
+Ein Adapter kennt keinen Queue-Anbieter. Derselbe Adapter muss mit lokalem Transport, GitHub-Issue-Transport oder spaeteren Transporten funktionieren koennen.
