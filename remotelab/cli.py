@@ -3,34 +3,14 @@ from __future__ import annotations
 import argparse
 
 from remotelab import __version__
+from remotelab.adapters.loader import load_adapters
 from remotelab.adapters.simulator import SimulatorAdapter
-from remotelab.adapters.xbot_readonly import XbotReadOnlyAdapter
 from remotelab.auth import load_github_token
 from remotelab.config import load_config
 from remotelab.core.engine import Engine
 from remotelab.core.state import QueueStateStore
 from remotelab.runner import IssueQueueRunner
 from remotelab.transports.github_issue import GitHubIssueClient, QueueBinding
-
-
-def build_adapters(cfg: dict):
-    devices = cfg.get("devices", {})
-    adapters = []
-
-    sim = devices.get("simulator", {})
-    if sim.get("enabled", False):
-        adapters.append(SimulatorAdapter())
-
-    xbot = devices.get("xbot_readonly", {})
-    if xbot.get("enabled", False):
-        port = xbot.get("port")
-        if not isinstance(port, str) or not port:
-            raise ValueError("devices.xbot_readonly.port missing")
-        adapters.append(XbotReadOnlyAdapter(port))
-
-    if not adapters:
-        raise ValueError("no device adapters enabled")
-    return adapters
 
 
 def build_runner(cfg: dict) -> IssueQueueRunner:
@@ -47,7 +27,7 @@ def build_runner(cfg: dict) -> IssueQueueRunner:
         user_agent=f"RemoteLab/{__version__}",
     )
     engine = Engine(
-        build_adapters(cfg),
+        load_adapters(cfg["adapters"]),
         cfg["audit_file"],
     )
     return IssueQueueRunner(
@@ -76,8 +56,16 @@ def main(argv=None) -> int:
     if args.action == "simulator":
         engine = Engine([SimulatorAdapter()], "runtime/audit.jsonl")
         print("RemoteLab", __version__)
-        print(engine.execute({"device": "simulator", "operation": "identify"}))
-        print(engine.execute({"device": "simulator", "operation": "diagnose"}))
+        print(
+            engine.execute(
+                {"device": "simulator", "operation": "identify"}
+            )
+        )
+        print(
+            engine.execute(
+                {"device": "simulator", "operation": "diagnose"}
+            )
+        )
         return 0
 
     cfg = load_config(args.config)
