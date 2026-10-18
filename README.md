@@ -11,7 +11,7 @@ Der zentrale Gedanke: Entwicklungslogik, Jobsteuerung und Audit gehoeren in eine
 - generischer Core
 - lokaler Simulator
 - read-only Adapter-Schnittstelle
-- XBOT als Legacy-Adapter vorgesehen
+- XBOT als Legacy-Adapter vorgesehen\n- optionaler read-only XBOT-Adapter fuer Identitaet und 0xF0-Diagnose
 - bestehende XBOT-Job-Queue bleibt unveraendert und ist **nicht** dieses Repository
 - Hardware-Schreiboperationen sind im neuen Core zunaechst gesperrt
 
