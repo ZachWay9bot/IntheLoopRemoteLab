@@ -7,13 +7,12 @@
   "poll_seconds": 8,
   "state_file": "runtime/queue_state.json",
   "audit_file": "runtime/audit.jsonl",
-  "devices": {
-    "simulator": {
-      "enabled": true
-    },
-    "xbot_readonly": {
-      "enabled": false,
-      "port": "COM9"
+  "adapters": [
+    {
+      "module": "remotelab.adapters.simulator",
+      "class": "SimulatorAdapter",
+      "enabled": true,
+      "args": {}
     }
-  }
+  ]
 }
