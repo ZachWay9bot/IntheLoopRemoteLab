@@ -1,15 +1,14 @@
 {
   "instance": "lab-main",
   "audit_file": "runtime/audit.jsonl",
-  "devices": {
-    "simulator": {
-      "enabled": true
-    },
-    "xbot_legacy": {
-      "enabled": false,
-      "mode": "migration-placeholder"
+  "adapters": [
+    {
+      "module": "remotelab.adapters.simulator",
+      "class": "SimulatorAdapter",
+      "enabled": true,
+      "args": {}
     }
-  },
+  ],
   "transports": {
     "local": {
       "enabled": true
