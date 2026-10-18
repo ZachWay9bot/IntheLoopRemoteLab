@@ -1,0 +1,21 @@
+{
+  "instance": "lab-main",
+  "audit_file": "runtime/audit.jsonl",
+  "devices": {
+    "simulator": {
+      "enabled": true
+    },
+    "xbot_legacy": {
+      "enabled": false,
+      "mode": "migration-placeholder"
+    }
+  },
+  "transports": {
+    "local": {
+      "enabled": true
+    },
+    "github_issue": {
+      "enabled": false
+    }
+  }
+}
