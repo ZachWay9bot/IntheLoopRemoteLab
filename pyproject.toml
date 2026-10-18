@@ -5,7 +5,7 @@ description = "Generic hardware-in-the-loop agent core"
 requires-python = ">=3.10"
 
 [project.optional-dependencies]
-xbot = ["pyserial>=3.5"]
+serial = ["pyserial>=3.5"]
 credentials = ["keyring>=24"]
 
 [tool.unittest]
