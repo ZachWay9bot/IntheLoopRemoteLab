@@ -158,11 +158,15 @@ class IssueQueueRunner:
 
         return processed
 
-    def run(self) -> None:
+    def prepare(self) -> None:
         self.client.validate()
         self.bind_without_replaying_history()
         self.recover_uncertain_job()
         self.flush_pending_results()
+
+    def run(self, prepared: bool = False) -> None:
+        if not prepared:
+            self.prepare()
 
         while True:
             try:
