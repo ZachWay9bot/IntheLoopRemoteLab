@@ -1,47 +1,32 @@
-# GitHub: Projekt-Repo, Job-Queue und Fine-grained PAT
+# GitHub Queue und Fine-grained PAT
 
-GitHub macht aus einer simplen Berechtigung gern eine kleine Verwaltungswissenschaft. Deshalb hier die klare Trennung.
+## Projekt-Repository
 
-## A. Projekt-Repository
+Das RemoteLab-Repository enthaelt Source, Dokumentation, Tests und Releases.
 
-`ZachWay9bot/RemoteLab` enthaelt:
+Eine Runtime-Queue ist davon getrennt.
 
-- Source
-- Dokumentation
-- Tests
-- Releases
+## Queue-Repository
 
-Dieses Repository ist **nicht** die XBOT-Job-Queue.
+Fuer einen GitHub-Issue-Transport wird ein separates privates Repository verwendet:
 
-Zum normalen Entwickeln ueber GitHub/ChatGPT ist kein lokaler Runtime-PAT fuer RemoteLab notwendig, solange der GitHub-Connector verwendet wird.
-
-## B. Bestehende XBOT-Queue
-
-Die bestehende XBOT-Queue bleibt unveraendert.
-
-- keine Umbenennung
-- kein Wechsel des Issue-Protokolls
-- kein neuer Token nur wegen RemoteLab v0.4
-- kein Umschalten des produktiven Agenten
-
-## C. Neue Queue fuer ein spaeteres Projekt
-
-Erst wenn ein neues Hardwareprojekt eine eigene Remote-Queue braucht:
-
-1. separates **privates** Repository erstellen, z. B. `MyDevice-RemoteQueue`
+1. privates Repository erstellen
 2. ein offenes Issue als Queue anlegen
 3. Fine-grained PAT erstellen
-4. bei **Repository access** nur dieses Queue-Repo auswaehlen
+4. bei Repository access nur das Queue-Repository auswaehlen
 5. Repository Permissions:
-   - **Contents: Read-only**, falls Artefakte aus dem Repo geladen werden
-   - **Issues: Read and write**, fuer Jobs und Ergebnisse
-   - **Metadata: Read** wird von GitHub automatisch benoetigt
-6. keine Administration-, Workflow- oder Actions-Rechte geben
+   - **Issues: Read and write**
+   - **Contents: Read-only**, falls Artefakte aus dem Queue-Repository geladen werden
+   - **Metadata: Read**
+6. keine unnoetigen Administrations- oder Workflow-Rechte vergeben
 
-Der Runtime-Agent soll so wenig Rechte wie moeglich besitzen.
+## Runtime-Credential
 
-## D. Warum Projekt-Repo und Queue getrennt bleiben
+RemoteLab liest den Token aus:
 
-Ein kompromittierter Runtime-Agent soll nicht automatisch Schreibrechte auf den Sourcecode haben. Die Queue ist Transport, das Projekt-Repo ist Entwicklungsstand.
+- Umgebungsvariable `REMOTELAB_GITHUB_TOKEN`, oder
+- Credential-Eintrag `RemoteLab-Core / github-token`
 
-Das ist auch der Grund, warum das bestehende XBOT-System nicht in das neue RemoteLab-Repo verschoben wird.
+## Trennung
+
+Die Queue transportiert Jobs und Ergebnisse. Sourcecode, Releases und Entwicklungsstand bleiben im Projekt-Repository.
