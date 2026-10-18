@@ -6,7 +6,7 @@ Der zentrale Gedanke: Entwicklungslogik, Jobsteuerung und Audit gehoeren in eine
 
 ## Status
 
-**v0.4-dev**
+**v0.4.1-dev**
 
 - generischer Core
 - lokaler Simulator
@@ -60,3 +60,22 @@ py -m remotelab
 ```
 
 Weitere Dokumentation liegt unter `docs/`.
+
+
+## Queue-Agent
+
+Konfiguration aus `examples/remotelab.queue.example.json` nach `remotelab.json` kopieren und anpassen.
+
+Ein einzelner Poll:
+
+```cmd
+py -m remotelab once --config remotelab.json
+```
+
+Dauerbetrieb:
+
+```cmd
+py -m remotelab run --config remotelab.json
+```
+
+Das generische Queue-Protokoll ist unter `docs/JOB_QUEUE_PROTOCOL_DE.md` dokumentiert.
