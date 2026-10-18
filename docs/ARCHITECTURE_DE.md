@@ -1,40 +1,43 @@
 # RemoteLab Architektur
 
-## 1. Trennung der Verantwortlichkeiten
+## Ebenen
 
-RemoteLab wird in vier Ebenen geteilt:
+RemoteLab trennt vier Verantwortlichkeiten:
 
-1. **Core**: Jobvalidierung, Dispatch, Audit, Policies.
-2. **Transport**: Woher Jobs kommen und wohin Ergebnisse gehen.
-3. **Adapter**: Geraetespezifische Protokolle und Diagnose.
+1. **Core**: Jobvalidierung, Dispatch, Audit und Policies.
+2. **Transport**: Jobannahme und Ergebnisrueckgabe.
+3. **Adapter**: geraetespezifische Protokolle und Hardwarefunktionen.
 4. **Projektlogik**: Firmware, Tests und projektspezifische Auswertung.
 
-Hardwareprotokolle duerfen nicht in den Transport wandern. GitHub-Code darf nicht wissen, wie ein XBOT geflasht wird.
+Ein Transport kennt keine Hardwareprotokolle. Der Core importiert keine konkreten Geraeteadapter.
 
-## 2. Projekt-Repository
+## Adapter-Laden
 
-`ZachWay9bot/RemoteLab` ist Source-/Dokumentations-/Release-Repository.
+Adapter werden zur Laufzeit aus der Konfiguration geladen:
 
-Es ist **keine Job-Queue**.
+```json
+{
+  "module": "some.package.adapter",
+  "class": "SomeAdapter",
+  "enabled": true,
+  "args": {}
+}
+```
 
-## 3. Bestehendes XBOT
+Dadurch kann neue Hardware hinzugefuegt werden, ohne Core oder Queue-Protokoll anzupassen.
 
-Der produktive XBOT-Agent, sein Queue-Repository und sein bestehender Jobkanal bleiben unveraendert.
-
-Der Adapter `xbot_legacy` ist in v0.4 nur eine Migrationsgrenze. Er besitzt keinen COM-Zugriff und keine Flashfunktion.
-
-## 4. Sicherheitsstufen
+## Sicherheitsstufen
 
 ### Stufe A
-Simulator, reine Offline-Tests.
+Simulator und reine Offline-Tests.
 
 ### Stufe B
-Echte Hardware, nur `identify` und `diagnose`.
+Echte Hardware mit passiven Operationen wie `identify` und `diagnose`.
 
 ### Stufe C
-Explizite Schreibfreigabe fuer einen konkreten Adapter.
+Explizit freigegebene Schreiboperationen fuer einen konkreten Adapter.
 
 ### Stufe D
-Aktive Tests mit zusaetzlichen Permit-/Lockout-Regeln.
+Aktive Tests mit projektspezifischen Permit-, Lockout- und Preflight-Regeln.
 
-Ein Adapter darf erst hochgestuft werden, wenn die vorherige Stufe regressionsgetestet ist.
+Ein Adapter wird erst hochgestuft, wenn die vorherige Stufe regressionsgetestet ist.
