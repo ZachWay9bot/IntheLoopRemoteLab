@@ -4,29 +4,23 @@
 
 - Windows 10 oder 11
 - Python 3.10 oder neuer
-- Git optional, aber empfohlen
-- fuer reale Hardware spaeter die passenden USB-/UART-Treiber
+- Git optional
+- fuer reale Hardware die zum Adapter passenden Treiber
 
 ## Repository holen
-
-Mit Git:
 
 ```cmd
 git clone https://github.com/ZachWay9bot/RemoteLab.git
 cd RemoteLab
 ```
 
-Oder das Repository als ZIP laden und entpacken.
-
-## Offline-Test
+## Tests
 
 ```cmd
 py -m unittest discover -s tests -v
 ```
 
-Der v0.4-Stand benoetigt fuer Core und Simulator keine externen Python-Pakete.
-
-## Simulator starten
+## Simulator
 
 ```cmd
 START_SIMULATOR.cmd
@@ -38,13 +32,28 @@ oder:
 py -m remotelab
 ```
 
-Dabei wird unter `runtime/audit.jsonl` ein lokales Audit-Log erzeugt.
+Das Audit-Log wird standardmaessig unter `runtime/audit.jsonl` erzeugt.
 
-## Noch nicht tun
+## Queue-Agent
 
-- produktiven XBOT-Agent ersetzen
-- COM9 aus RemoteLab v0.4 oeffnen
-- Firmware ueber den neuen Core flashen
-- Motor-Testjobs ueber den neuen Core senden
+Beispielkonfiguration kopieren:
 
-Diese Pfade werden erst nach der read-only Migration aktiviert.
+```cmd
+copy examples\remotelab.queue.example.json remotelab.json
+```
+
+Danach Queue-Daten und Adapter in `remotelab.json` konfigurieren.
+
+Ein Poll:
+
+```cmd
+RUN_AGENT_ONCE.cmd
+```
+
+Dauerbetrieb:
+
+```cmd
+RUN_AGENT.cmd
+```
+
+Adapterspezifische Installation steht unter `docs/adapters/`.
