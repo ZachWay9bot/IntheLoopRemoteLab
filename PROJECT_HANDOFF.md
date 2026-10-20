@@ -111,3 +111,19 @@ Arbeitsstil: Bei jedem wesentlichen Schritt **vorher** angeben: (1) was, (2) war
 5. Erst danach gemeinsame reproduzierbare Source-Builds und Softwareregressionen, jeweils an Original-Firmwarecode (hoch).
 
 **Status: Dieses Update ist reine Projektorganisation und Source-/CI-Analyse; an den drei Firmwarequellen wurde noch nichts veraendert.**
+
+## Verbindliche FO72-Rueckkehr — nachtraegliche Nutzerentscheidung vom 20.10.2026
+
+**Fuer die XBOT/G30-identical-Firmwareentwicklung (NICHT fuer die RemoteLab-Agentversion)** gilt ab sofort `XBOTFO72V00721` (FW 0.7.2.1) als rueckzusetzende Originalbasis. Alle ab FO91/0.9.1 eingefuehrten experimentellen Bootloader-CRC-/Flashgroessen-IAP-Lockouts duerfen nicht wieder eingefuehrt oder als Voraussetzung fuer neuen Firmwarecode uebernommen werden.
+
+Beweise aus privatem GitHub-RemoteLab-Issue #1:
+- FO72-Flash erfolgreich, SHA256 des historischen 20.920-Byte-Images `1edf01b3127ac596d840119b2bbd1b60bc1f9ea493590e734abdd5ce20739d6d`.
+- FO72 -> FO73-Flash erfolgreich; somit war FO72-IAP damals funktionsfaehig.
+- FO72 Motor-Wizard war wegen `PARAM_FAULT/L_WEAK` **noch nicht erfolgreich**. FO73 hatte einen separaten LFIX; nicht stillschweigend in FO72 hineinkopieren.
+- Spaeter FO91/0.9.1: Image `XBOTFO91V00911`, IAP-Error 7 und BootCRC/Flashgroessen-Guard laut r9-Rekonstruktion.
+
+Die bindende Detailreferenz liegt in [xbot-remote-lab / FO72_SOURCE_ROLLBACK_BASELINE.md](https://github.com/ZachWay9bot/xbot-remote-lab/blob/main/FO72_SOURCE_ROLLBACK_BASELINE.md) (privates Repository).
+
+**BLOCKER fuer echten Source-Rollback:** Das Original-Source-ZIP `XBOT_FO72_MOTOR_DETECTION_WIZARD_COMPLETE_SOURCE_20261017.zip` existiert in der Library unter `/xbotwebdev/`, aber seine Rohdaten sind in dieser Sitzung **nicht** freigegeben/materialisierbar. Das private GitHub-Repo hat keinen vollstaendigen FO72-Source-Checkout. Deshalb wurde bislang nur die Ruecksetzentscheidung versioniert, **noch keine Firmwarequelle zurueckgesetzt und keine Hardware geflasht**. Nur mit lesbaren Original-Source-Bytes FO72 wirklich restore'n; keinen falschen Reset oder Neuaufbau aus FO91 vortaeuschen.
+
+Die drei laufenden Firmwareprojekte DeltaESC, EBiCS, SmartESC werden weiterhin separat behandelt; keine pauschale unbeauftragte Downgrade-/Recovery-Aenderung in ihnen.
