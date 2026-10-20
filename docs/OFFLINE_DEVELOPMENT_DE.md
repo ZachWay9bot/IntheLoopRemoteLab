@@ -25,6 +25,14 @@ Oder: `py -m unittest discover -s tests -v`.
 
 **In den Fixture-Daten enthaltene Werte sind rein exemplarische Labels**. Echte Tests werden erst als bestanden bezeichnet, wenn der exakte Code kompiliert/ausgefuehrt und die Ausgabe dokumentiert wurde.
 
+## Motor-Emulation: unabhaengige Profile (Korrektur vom 20.10.2026)
+
+- `ebike_front_hub_donor`: Frontnabenmotor des E-Bike-Pruefaufbaus; die vorhandenen FO60-/FO69-/FO70-Logs gehoeren hierhin.
+- `ninebot_g30_gen1`: derzeit **nicht mit eigenen elektrischen Motorparametern vermessen**; reale Messungen werden in Kuerze erwartet. Nicht einfach Donor-R/L/Flux oder Pole-Pairs uebernehmen.
+- Parameter werden mit Quelle, Messverfahren, Datum, Hardwarezuordnung und Unsicherheiten dokumentiert.
+- Ergebnisse fuer den Donor sind kein Motorlaufbeleg fuer G30 Gen1. Die Motorprofile duerfen sich im Simulator nicht versehentlich gegenseitig ueberschreiben.
+- Geplanter Workflow: Donor mit Real-Logs und physikalischem PMSM-Modell kalibrieren -> Emulator-/Firmware-Schnittstellen pruefen -> spaeter G30 Gen1 separat vermessen und kalibrieren.
+
 ## Nächste werkzeugseitige Erweiterungen
 1. Quell-/Testpakete mit sha256 und Herkunft einfrieren; EBiCS Library-ZIP ist derzeit als Metadaten auffindbar, aber nicht byteweise in dieser Sitzung lesbar.
 2. Projektweise Host-Builds/Tests in isolierten Jobs; keine Aenderung am bestehenden IAP-/Recovery-Code.
