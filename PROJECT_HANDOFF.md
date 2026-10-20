@@ -127,3 +127,18 @@ Die bindende Detailreferenz liegt in [xbot-remote-lab / FO72_SOURCE_ROLLBACK_BAS
 **BLOCKER fuer echten Source-Rollback:** Das Original-Source-ZIP `XBOT_FO72_MOTOR_DETECTION_WIZARD_COMPLETE_SOURCE_20261017.zip` existiert in der Library unter `/xbotwebdev/`, aber seine Rohdaten sind in dieser Sitzung **nicht** freigegeben/materialisierbar. Das private GitHub-Repo hat keinen vollstaendigen FO72-Source-Checkout. Deshalb wurde bislang nur die Ruecksetzentscheidung versioniert, **noch keine Firmwarequelle zurueckgesetzt und keine Hardware geflasht**. Nur mit lesbaren Original-Source-Bytes FO72 wirklich restore'n; keinen falschen Reset oder Neuaufbau aus FO91 vortaeuschen.
 
 Die drei laufenden Firmwareprojekte DeltaESC, EBiCS, SmartESC werden weiterhin separat behandelt; keine pauschale unbeauftragte Downgrade-/Recovery-Aenderung in ihnen.
+
+## FO76-Quellpaket jetzt lokal geprueft (21.10.2026)
+
+Der Benutzer hat `XBOT_FO76_CURRENT_GOVERNED_WIZARD_COMPLETE_SOURCE_20261018.zip` direkt hochgeladen. Originalarchiv-SHA256 `298a6624d729e7b3a71ba8787c3b9da05196251d74488584a22992886f18f97c`.
+
+- FO76 ist **nicht** FO72; allerdings vollstaendige rekonstruierbare Original-Source von v0.7.6 und klar **vor FO91/0.9.1**.
+- Im ausgepackten FO76-Archiv: 15 C-Sources, 22 native C-Tests, `Makefile`, `linker.ld`, IAP-Quelldatei, Bench und G30_PASSIVE.
+- ARM-Neubuild **byteidentisch** zu beiden Archiv-BINs, checksum/decryption OK; 22/22 C-Tests PASS.
+- BENCH `XBOTFO76V00761`, SHA256 `a8b7ca7d45fdfa32cbcbfdfbe98e2e655a266ecc57aea62f8149ecf3cbe74bcb`.
+- G30_PASSIVE `XBOTFO76V00760`, SHA256 `e1aa7d2f35c4596220ad03a4284e38ce8abf9b4137226b99fdfb305386723154`.
+- `src/iap.c` enthaelt **keinen** FO91-CRC/F1-Flashgroessen-Gate. Das entfernt NICHT bereits vorhandene Defekte im realen Controller; keine Hardware-Ruecksetzung.
+- 4/19 Baseline-Hash-Eintraege der **alten** `BASELINE_GUARD_SHA256.txt` passen nicht mehr zur mitgelieferten FO76-Quelle. Einzelheiten in [FO72_SOURCE_ROLLBACK_BASELINE.md](https://github.com/ZachWay9bot/xbot-remote-lab/blob/main/FO72_SOURCE_ROLLBACK_BASELINE.md) des privaten XBOT-Repos.
+- **Ab jetzt fuer Software-Weiterarbeit:** exakt dieses FO76-v0.7.6-Quellpaket als verfügbare vor-FO91-Basis nutzen, bis der Benutzer ggfs. FO72-Originalquelle verfuegbar macht. Kein fiktiver FO72-Quellbaum.
+- **NICHT geschehen:** Source-Paket in private Repo `firmware/` importiert; bisher nur Pruefbericht und Basisentscheidung hinterlegt. Nie irrefuehrend als Quell-Rollback in GitHub bezeichnen.
+- FO76 G30_PASSIVE ist messungs-only, kein fahrfertiges G30D-Image; Bench-Profileinstellungen stammen vom E-Bike-Frontnaben-Donor.
