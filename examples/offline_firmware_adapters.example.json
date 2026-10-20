@@ -1,0 +1,47 @@
+{
+  "description": "OFFLINE FIXTURES ONLY: no firmware executed, no controller connected, no hardware evidence.",
+  "adapters": [
+    {
+      "module": "remotelab.adapters.offline_fixture",
+      "class": "OfflineFirmwareFixtureAdapter",
+      "enabled": true,
+      "args": {
+        "name": "offline_deltaesc",
+        "project": "DeltaESC",
+        "firmware_reference": "v0.10.2 ACTIVE TELEMETRY RC (repository reference)",
+        "diagnostic_fixture": {
+          "scenario": "adc_offset_math",
+          "result": "SYNTHETIC_NOT_MEASURED"
+        }
+      }
+    },
+    {
+      "module": "remotelab.adapters.offline_fixture",
+      "class": "OfflineFirmwareFixtureAdapter",
+      "enabled": true,
+      "args": {
+        "name": "offline_ebics",
+        "project": "EBiCS",
+        "firmware_reference": "v0.3.4-r6 (last BLE tested); r9 candidate not validated",
+        "diagnostic_fixture": {
+          "scenario": "ble_handshake_state_machine",
+          "result": "SYNTHETIC_NOT_MEASURED"
+        }
+      }
+    },
+    {
+      "module": "remotelab.adapters.offline_fixture",
+      "class": "OfflineFirmwareFixtureAdapter",
+      "enabled": true,
+      "args": {
+        "name": "offline_smartesc",
+        "project": "SmartESC",
+        "firmware_reference": "G30 NativeDash v0.8.7",
+        "diagnostic_fixture": {
+          "scenario": "brake_priority_state",
+          "result": "SYNTHETIC_NOT_MEASURED"
+        }
+      }
+    }
+  ]
+}
