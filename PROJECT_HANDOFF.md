@@ -47,6 +47,14 @@ Contract: [PROJECT_CONTRACT.md](PROJECT_CONTRACT.md), Version 1.0
 - Status: bestehender Release-HOLD, exaktes v0.8.7-Image noch nicht am neuen Controller hardwarequalifiziert. Alte BIN/ZIP im Repository sind historische Artefakte.
 - **Noch offen:** Hostmodelle fuer Speed/Pole-Pairs, Brake-Priority, Detect-State, Observer und Faultabbruch; echter G30-Hardwaretest spaeter.
 
+## Motorprofil-Trennung fuer IntheLoop Virtual Controller Pack (Korrektur 20.10.2026)
+- **Donor/Testmotor:** E-Bike-Frontnabenmotor. Die bisherigen XBOT-Motorlauf-/BEMF-/Flux-Logs FO60, FO69 und FO70 beziehen sich auf diesen Testmotor und die damalige Testhardware, **nicht** auf den Ninebot G30 Gen1-Motor.
+- **Vorlaeufige Donor-Referenzwerte** aus den Firmware-Unterlagen: R-Phase etwa 0,583 Ohm; Ld etwa 0,640 mH; PM-Flussverkettung etwa 12,1 mWb. Diese Werte nicht als G30-Gen1-Messungen deklarieren.
+- **G30 Gen1 Zielmotor:** Eigene physikalische Messung ist laut Projektbesitzer demnaechst moeglich; R/L/Fluss, Polpaarzahl, Traegheit und Hall-/BEMF-Zuordnung fuer dieses Profil bis dahin **unbestimmt bzw. zu verifizieren**.
+- Virtuelles Labor verwendet strikt getrennte Profile `ebike_front_hub_donor` (mit expliziter Provenienz) und `ninebot_g30_gen1` (zunaechst **nicht kalibriert**). Keine stille Uebernahme von Donorwerten in G30-Gen1-Modell oder Firmware-Defaults.
+- G30 Gen2 ist spaeter ein **drittes** separates Profil, sofern benoetigt.
+- Keine Aenderung an Firmware-Koeffizienten, Motorregelung oder Flash-/Recovery-Pfaden durch diese Dokumentationskorrektur.
+
 ## IntheLoopRemoteLab
 - Repo: [IntheLoopRemoteLab](https://github.com/ZachWay9bot/IntheLoopRemoteLab), Branch `main`.
 - Baseline vor Auftrag `v0.4.1-dev`; generic Core, GitHub-Issue-Transport, Loader, bestehender Simulator. Der laufende Core erlaubt `identify` und `diagnose` (keine Motor-/Flashoperationen).
