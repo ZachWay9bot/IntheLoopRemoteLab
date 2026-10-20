@@ -87,3 +87,27 @@ Contract: [PROJECT_CONTRACT.md](PROJECT_CONTRACT.md), Version 1.0
 - Neue lokale Run-Anleitung: `START_OFFLINE_3FW.cmd`. Source- und Testplanung: `docs/OFFLINE_DEVELOPMENT_DE.md`.
 
 **Noch NICHT abgeschlossen:** echte DeltaESC-/EBiCS-/SmartESC-Firmware-Hostsimulationen, aktuelles EBiCS-r9-Byteaudit, neue Firmware-Builds sowie sämtliche Controller-Hardwaretests. Hier keinen Erfolg behaupten.
+
+## AKTUELLE ARBEITSANWEISUNG — Firmware first, KEIN Simulator (20.10.2026, spaeter)
+
+Der Projektbesitzer hat das zuvor diskutierte **IntheLoop Virtual Controller Pack / die Motor-/Dashboard-Simulation als aktuelles Entwicklungsziel ausdrücklich verworfen**. Wichtig ist ausschliesslich, die drei realen Firmwareprojekte schneller und nachvollziehbar moeglichst weit fertigzustellen. Bestehende synthetische Offline-Fixtures sind KEINE Firmwaretest-Belege und duerfen nicht als solche ausgegeben werden. Keine weitere Virtualisierung oder Simulation fuer diesen Auftrag anlegen.
+
+Arbeitsstil: Bei jedem wesentlichen Schritt **vorher** angeben: (1) was, (2) warum, (3) Erfolgskriterium, (4) was wirklich hardwareabhängig offen bleibt, (5) ob es ein wichtiger Blocker ist. Regulaere bestandene Build-/Hosttests selbstaendig fortsetzen. Bei einem Blocker Optionen und Aufwand aufzeigen; der Nutzer entscheidet, ob wir daran bleiben. Keine ungefragten Aenderungen an Flash-/IAP-/Recovery-Routinen oder bestaetigt funktionierenden Funktionen.
+
+### Erster echter Source-/CI-Befund
+- SmartESC Branch `vesc_comp`, Commit `13eea0c1ed927cdeb4111fc77c3d3b939ca326e6`: GitHub Actions `Build G30 NativeDash on commit` Run [39340841437](https://github.com/ZachWay9bot/SmartESC_STM32_v21b/actions/runs/39340841437) **FAILED** im eigentlichen Schritt `Build G30P`.
+- Joblog zeigt konkret `region 'FLASH' overflowed by 4 bytes` beim Linken von `g30p.elf`; **kein** generischer Compilerfehler, sondern 4-Byte-Grenze der gelinkten App. Keine Linkerregion vergoessern; ein minimaler, semantisch unveraenderter Codegroessen-Fix auf isoliertem Entwicklungszweig ist moegliche naechste Arbeit.
+- Positiver `G30 UART Recovery Anti-Lockout Audit` Run [39471169437](https://github.com/ZachWay9bot/SmartESC_STM32_v21b/actions/runs/39471169437) ersetzt den fehlgeschlagenen App-Build NICHT.
+- Im echten Quellcode `common_files/src/app.c` existiert unter `case APP_ADC:` kein `break` vor `case APP_ADC_UART:`, wodurch zusaetzlich `task_cli_init(&aux_uart)` durchlaufen wird. Moeglicher Funktionsfehler / fragliche Doppelinitialisierung; Beurteilung haengt von aktiver Konfiguration ab. Noch NICHT geaendert und NICHT als bewiesener Laufzeitfehler etikettieren.
+- `common_files/inc/appconf_default.h` definiert standardmaessig `APPCONF_APP_TO_USE=APP_UART` vorbehaltlich anderer Overrides. Kein Beleg, dass `APP_ADC` im aktuellen Fahrzeug-Default tatsaechlich aktiviert wird.
+- DeltaESC v0.10.2: dokumentierter alter kompletter Cortex-M3-/Host-CI-Build `39159514233` erfolgreich; aktuellste Runs sind nur `UART recovery safety audit`, keine neue aktive Motortest-Qualifikation.
+- EBiCS r9: exakte neue Source-Archive liegen in der Library, aber konnten im bisherigen Zugriff nicht byteweise materialisiert werden. Keine Quellcode-Fixes als erledigt behaupten.
+
+### Naechste sinnvolle Arbeitspakete
+1. SmartESC 4-Byte-FLASH-Ueberlauf **isoliert** beseitigen und denselben Build in CI gruen bekommen, ohne Speicherlayout/Recovery zu aendern (hoch, Softwareblocker).
+2. SmartESC `APP_ADC`-Fallthrough und Dashboard-Bremsprioritaet mit realem Quellstand untersuchen und gezielte Host-/Quelltests erstellen (hoch, sofern Pfad verwendet).
+3. DeltaESC-Quell-ZIP fuer byteweises Audit bereitstellen, bestehende Testlogs/BIN-Identitaet pruefen; echte G30-Gen1-Motormessungen bleiben spaeter (mittel; kein Anlass fuer Modell-Simulation).
+4. EBiCS r9 exaktes Archiv zugaenglich machen; insbesondere ADC-Budget/Bootpfad, UART/BLE und reale r6-Referenz vergleichen, ohne Restore-/Flashweg anzugreifen (hoch, Source-Zugriff derzeit Blocker).
+5. Erst danach gemeinsame reproduzierbare Source-Builds und Softwareregressionen, jeweils an Original-Firmwarecode (hoch).
+
+**Status: Dieses Update ist reine Projektorganisation und Source-/CI-Analyse; an den drei Firmwarequellen wurde noch nichts veraendert.**
