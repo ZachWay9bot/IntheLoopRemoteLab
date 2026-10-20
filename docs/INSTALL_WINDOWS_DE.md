@@ -10,8 +10,8 @@
 ## Repository holen
 
 ```cmd
-git clone https://github.com/ZachWay9bot/RemoteLab.git
-cd RemoteLab
+git clone https://github.com/ZachWay9bot/IntheLoopRemoteLab.git
+cd IntheLoopRemoteLab
 ```
 
 ## Tests
@@ -57,3 +57,15 @@ RUN_AGENT.cmd
 ```
 
 Adapterspezifische Installation steht unter `docs/adapters/`.
+
+## Offline-Entwicklung ohne Controller (drei Firmwareprojekte)
+
+Im Repository-Ordner:
+
+```cmd
+START_OFFLINE_3FW.cmd
+```
+
+Dabei laufen normale Unit-Tests sowie die drei synthetischen Offline-Adapter.
+**Dies ist kein Firmware-Build und kein Nachweis von Motor-/ADC-Hardwaretests.**
+Verbindliche Regeln und aktuelle Schichtuebergabe: `PROJECT_CONTRACT.md`, `PROJECT_HANDOFF.md`.
