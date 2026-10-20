@@ -54,7 +54,7 @@ Contract: [PROJECT_CONTRACT.md](PROJECT_CONTRACT.md), Version 1.0
 - Auf Schreib-/Flash-/Recovery-Komponenten wurden **keine** Aenderungen vorgenommen.
 
 ## Nächste Schritte (innerhalb der Freigabe)
-1. Neue Offline-Fixture-Tests in GitHub-CI verifizieren und etwaige reine Testcodefehler beheben.
+1. Naechste Offline-Hosttests an tatsaechlichen Firmwarefunktionen von DeltaESC/SmartESC vorbereiten; bisher sind nur RemoteLab-/Fixture-Tests CI-gruen.
 2. Offline-Matrix und Testdaten-/Evidence-Konvention versionieren.
 3. Vorhandene EBiCS-r6/r9-Quellen erst nach autorisiertem Bytezugriff wirklich lesen; r6 Hardware-Referenz **nicht** mit r9 Softwarestand verwechseln.
 4. Projektweise isolierte Hosttests anhand **tatsaechlicher** Firmwarefunktionen entwickeln (keine simulierten Werte als FOC-/ADC-Validierung ausgeben).
@@ -68,3 +68,14 @@ Contract: [PROJECT_CONTRACT.md](PROJECT_CONTRACT.md), Version 1.0
 
 ## Chatwechsel-Prozedur
 **Dieser Bericht und `PROJECT_CONTRACT.md` muessen vor dem ersten Schreibvorgang erneut geoeffnet werden.** SHA und offene Punkte mit aktuellem GitHub abgleichen. Unbekanntes explizit als unbekannt markieren. Nach wesentlichen Aenderungen Bericht versioniert fortschreiben.
+
+## Fortschrittsnachtrag (20.10.2026)
+- Zentrale Vertragsdatei erstellt, Commit `794468483824db8946adab0e3cf3f11e85ce7e3d`.
+- Offline-Fixture-Adapter, 3-Projekt-Beispiel, Windows-Starter, Smoke-Runner, Unit-Tests und Offline-Plan erstellt. **Keine** Produktionsfirmware und kein Flash-/Recoverypfad geaendert.
+- `tests/test_offline_firmware_fixture.py` sowie `tests/test_offline_smoke_runner.py` werden im bestehenden Unit-Test-Workflow ausgefuehrt.
+- GitHub Actions `tests` auf Python 3.10/3.12 **PASS** am Commit `95aef8dc40a490dc03c6025112d56da559186604`, Run [39471270697](https://github.com/ZachWay9bot/IntheLoopRemoteLab/actions/runs/39471270697).
+- Dokumentations-Verweise zu diesem Vertrag in DeltaESC `eb30fbfd61fba4768be399a3aedf98dc2c2039f0` und SmartESC `cd33fdb86a542c881b90adf70175bd82971012c6`; beide **nur Dokumentations-Commits**.
+- Beleggrenze: Der RemoteLab-Durchlauf prueft synthetische Fixtures und Job-Dispatch, **nicht** STM32-Firmware-Code oder Realhardware. Die EBiCS-r9-Source-ZIPs wurden als Library-Metadaten gefunden, konnten aber aus der Library nicht als Rohdatei materialisiert werden.
+- Neue lokale Run-Anleitung: `START_OFFLINE_3FW.cmd`. Source- und Testplanung: `docs/OFFLINE_DEVELOPMENT_DE.md`.
+
+**Noch NICHT abgeschlossen:** echte DeltaESC-/EBiCS-/SmartESC-Firmware-Hostsimulationen, aktuelles EBiCS-r9-Byteaudit, neue Firmware-Builds sowie sämtliche Controller-Hardwaretests. Hier keinen Erfolg behaupten.
