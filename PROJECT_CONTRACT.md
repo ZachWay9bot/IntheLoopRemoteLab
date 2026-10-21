@@ -1,10 +1,35 @@
 # PROJECT_CONTRACT.md — IntheLoopRemoteLab Development Contract
-Version: 1.0
-Effective: 2026-10-20
+Version: 1.1
+Effective: 2026-10-21
 Scope: IntheLoopRemoteLab and the explicitly linked DeltaESC, EBiCS and SmartESC development tracks.
-Status: Approved by project owner in ChatGPT on 2026-10-20.
+Status: Baseline approved on 2026-10-20; DeltaESC clarification explicitly approved on 2026-10-21.
 
 > **If it works, it works. No need to change a running system.**
+
+## Verbindliche DeltaESC-Klarstellung vom 21.10.2026
+
+Der Projektbesitzer hat die zuvor zu weit ausgelegte Zustimmungspflicht
+korrigiert: Fuer den aktuellen DeltaESC-Auftrag gilt sie fuer den
+**Rueckflashpfad**, der ohne ST-Link frei und erreichbar bleiben muss.
+**Motorfreigabe ist erteilt.** Die fuer Fahrbetrieb notwendigen Motorstart-,
+Regelungs-, Ausroll-/Wiederanlauf- und Schutzlogik-Aenderungen duerfen im
+Auftrag eigenstaendig umgesetzt werden; keine erneuten Einzelgenehmigungen
+an regulaeren Softwareteilschritten verlangen.
+
+**Am aktuellen Zielcontroller gibt es keine ST-Link-Moeglichkeit.** Fruehere
+ST-Link-Nachweise sind historisch und kein verfuegbarer Rueckweg. Keine
+neuen CRC-, Flashgroessen-, Versions-, Kalibrierungs- oder Motorfehler-Gates
+duerfen IAP/Rueckflash blockieren. Vor einer Flash-Empfehlung muss der
+tatsaechliche Rueckweg am exakten Ziel bekannt und belegt sein. Ein
+Handler innerhalb der austauschbaren App allein ist kein Nachweis fuer
+Recovery bei einer gar nicht startenden App; keine solche Garantie erfinden.
+
+Diese aktuelle, ausdrueckliche Freigabe uebersteuert fuer DeltaESC die
+widersprechenden Motor-Freigabeannahmen in v1.0 und alten Uebergaben.
+Elektrische Schutzfunktionen bleiben Entwicklungsgegenstand und werden
+nicht pauschal entfernt. Keine nicht nachweisbar reversible Hardwareaktion,
+kein neuer Bootloader und kein Versuch mit geratenem Flashlayout folgt
+allein aus dieser Source-Freigabe. Andere Projektauftraege bleiben getrennt.
 
 ## 1. Ziel und Arbeitsmodus
 Wir entwickeln für die jeweils **konkret bekannte, festgelegte Hardware**, nicht für hypothetische Drittgeräte. Ein Hinweis "tested only on the specified hardware revision; other hardware is not qualified" genügt für öffentliche Releases. Fehlende allgemeine Kompatibilität ist kein Grund für eine invasive Änderung.

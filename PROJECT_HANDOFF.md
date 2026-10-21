@@ -2,7 +2,42 @@
 Stand: 2026-10-20
 Contract: [PROJECT_CONTRACT.md](PROJECT_CONTRACT.md), Version 1.0
 
-## Aktueller Auftrag / explizite Freigabe
+## AKTUELL — DeltaESC-Motorfreigabe und Rueckflashprioritaet (21.10.2026)
+
+Dieser Abschnitt uebersteuert die aelteren DeltaESC-Freigabe-/ST-Link-Angaben
+unten. Vertrag aktuell v1.1: Der Besitzer hat Motorfreigabe und die fuer
+Fahrbetrieb notwendigen Aenderungen ausdruecklich erteilt. Keine erneuten
+Einzelgenehmigungen fuer Motorentwicklung verlangen. Prioritaet hat die
+Rueckkehr ohne ST-Link; **ST-Link ist am Ziel nicht verfuegbar**.
+
+- Konkrete Softwarekorrekturen liegen in [DeltaESC PR #21](https://github.com/ZachWay9bot/DeltaESC-G30D/pull/21),
+  Branch `dev/drive-reversible-20261021`, Source-Commit `9c836200fef77c3b012337b9d371c85081258a3a`.
+- Komplette editierbare Quelle `firmware/`, v0.10.3 `FW_BUILD=0x1030`.
+  RC-Startmasken und Runtime-Eigentuemerpruefung konsistent; proportionale
+  Gasvorgabe, normale Coast/Wiederanlauf-Funktion und Brake-Priority.
+  E6/Fault bleiben terminal; keine neuen IAP-Sperren.
+- Native 35 Komponenten-/Integrationsgruppen bestanden. Die echte
+  `main.c` wird mit Register-Speicher und inerten ARM-Barrieren geprueft;
+  kein Motor-/ADC-/Flash-Modell, kein Hardwaretest. Der unveraenderte
+  IAP-Parser akzeptiert BEGIN nach E6, Motorfehlern und IAP-Order-Fehler;
+  pending IAP verhindert einen Motorstart.
+- Alle IAP-, UART-, CPU-Header- und Linkerdateien sind bytegleich zur
+  oeffentlichen v0.10.2-Referenz. ARM-/CI-Status am exakten genannten Commit
+  lesen; der erste Dreifach-Build fand einen ID-only-unused-function-Fehler,
+  der durch passend bedingtes Kompilieren der Closed-Loop-Helfer korrigiert
+  wurde. Kein frueheres CI-PASS auf den neuen Stand uebertragen.
+- Der Fahrkandidat startet ohne Donor-R/L/Flux/Geometrie; F0-F5 bleibt
+  transaktional/RAM, FF ergaenzt gemessene Geometrie und Readback, der alte
+  F6-ADC-Read bleibt. Phase-Offset gilt fuer Observer UND passiven Seed.
+- Offen: tatsaechlicher Rueckflash am aktuellen Ziel ohne ST-Link,
+  G30-Messdaten, Leistungs-/Bremsvalidierung, BMS/SOC. Aktuelle Bremse
+  coasts; Batterieanzeige ist weiterhin Platzhalter. Keine Fahrfertigkeit
+  behaupten und keine neuen Images als flashfreigegeben ausgeben.
+- Kein Controller geflasht, kein Motor aktiviert und keine private Queue
+  geaendert. Weitere Details/aktuelle Uebergabe:
+  [DeltaESC PROJECT_HANDOFF](https://github.com/ZachWay9bot/DeltaESC-G30D/blob/dev/drive-reversible-20261021/docs/PROJECT_HANDOFF.md).
+
+## Historischer Auftrag vom 20.10.2026 / damalige Freigabe
 - Verbindlichen Vertrag hinterlegen.
 - Quellstand DeltaESC, EBiCS, SmartESC pruefen und dokumentieren.
 - Simulation und Offlineentwicklung vorbereiten.
