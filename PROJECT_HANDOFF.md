@@ -2,6 +2,36 @@
 Stand: 2026-10-20
 Contract: [PROJECT_CONTRACT.md](PROJECT_CONTRACT.md), Version 1.0
 
+## KORREKTUR — reale FO76-Historie und IAP-only-Ziel (21.10.2026)
+
+Der kommende Controller ist noch nicht eingetroffen; DRV 1.8.7 ist der
+erwartete Lieferstand, DRV126 die geplante Basis. Bis auf Weiteres per IAP
+flashen. **ST-Link ist physisch ausgeschlossen**, keine entsprechende
+Alternative anbieten oder erneut erfragen. Motorentwicklung ist freigegeben.
+
+Die private archivierte Issue-Historie wurde diesmal direkt gelesen
+(keine neuen Jobs gesendet):
+- FO76-Flash `fo76-repo-flash`: erfolgreich und verifiziert.
+- `fo76-24v-wizard-once`: `success=true`, `DONE/PLATEAU`,
+  Takeover `SUCCESS`, 40.000/40.000 ACTIVE-Ticks, max. 76 Strom-Counts,
+  ausgewaehlter Observer 0 Clamps.
+- FO76 -> FO78: erfolgreicher IAP-Weiterflash.
+- FO80 -> `XBOTFO91V00911`: erfolgreich installiert; anschliessender
+  Rueckflash zu FO80 scheiterte mit `IAP status 7`. Der dokumentierte
+  FO91-Fingerprint-/128-KiB-Vorbehalt war eine Rueckflashregression.
+- Die real geflashte FO76-Datei (21.712 Bytes, SHA256
+  `35ceae5c635c66f667380fc8dd0777463aed5dde98014328d123be5965812554`)
+  ist **nicht** bytegleich zur unten dokumentierten Source-Reproduktion
+  (21.728 Bytes, `a8b7ca7d45fdfa32cbcbfdfbe98e2e655a266ecc57aea62f8149ecf3cbe74bcb`).
+  Die gemeinsame Kennung `XBOTFO76V00761` ersetzt keinen Hashabgleich.
+  Beide Belege erhalten; den Unterschied noch vergleichen.
+- [Originalbelege und genaue Zuordnung](https://github.com/ZachWay9bot/DeltaESC-G30D/blob/dev/drive-reversible-20261021/docs/HARDWARE_HISTORY_FO76_FO91_20261021.md).
+
+"Kein Hardwaretest" in den folgenden v0.10.3-Abschnitten gilt nur fuer den
+neuen Kandidaten. Die frueheren realen Flash-/Motorerfolge sind bestaetigt
+und duerfen nicht erneut als fehlend behandelt werden. Das ist keine
+nachtraegliche Hardwarequalifikation des neuen Kandidaten.
+
 ## AKTUELL — DeltaESC-Motorfreigabe und Rueckflashprioritaet (21.10.2026)
 
 Dieser Abschnitt uebersteuert die aelteren DeltaESC-Freigabe-/ST-Link-Angaben
