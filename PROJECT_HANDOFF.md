@@ -11,7 +11,7 @@ Einzelgenehmigungen fuer Motorentwicklung verlangen. Prioritaet hat die
 Rueckkehr ohne ST-Link; **ST-Link ist am Ziel nicht verfuegbar**.
 
 - Konkrete Softwarekorrekturen liegen in [DeltaESC PR #21](https://github.com/ZachWay9bot/DeltaESC-G30D/pull/21),
-  Branch `dev/drive-reversible-20261021`, Source-Commit `9c836200fef77c3b012337b9d371c85081258a3a`.
+  Branch `dev/drive-reversible-20261021`, Source-Commit `cc7df57d10da9d16c1e8387cd8622bf327e364bd`.
 - Komplette editierbare Quelle `firmware/`, v0.10.3 `FW_BUILD=0x1030`.
   RC-Startmasken und Runtime-Eigentuemerpruefung konsistent; proportionale
   Gasvorgabe, normale Coast/Wiederanlauf-Funktion und Brake-Priority.
@@ -36,6 +36,32 @@ Rueckkehr ohne ST-Link; **ST-Link ist am Ziel nicht verfuegbar**.
 - Kein Controller geflasht, kein Motor aktiviert und keine private Queue
   geaendert. Weitere Details/aktuelle Uebergabe:
   [DeltaESC PROJECT_HANDOFF](https://github.com/ZachWay9bot/DeltaESC-G30D/blob/dev/drive-reversible-20261021/docs/PROJECT_HANDOFF.md).
+
+### DeltaESC: abgeschlossene Softwarepruefung
+
+- [CI 39573629137](https://github.com/ZachWay9bot/DeltaESC-G30D/actions/runs/39573629137)
+  **PASS** am Source-Commit `cc7df57d10da9d16c1e8387cd8622bf327e364bd`:
+  35 Komponenten-/Integrationsgruppen, Safe/ID-only/Drive-ARM-Builds,
+  separater ARM-Profil-Fixture-Build, IAP-Symbole gelinkt und bestehender
+  Anti-Lockout-Check bestanden. Kein Hardwaretest.
+- Kandidat 32.748 Bytes, SHA256
+  `707c17285e65bfb94074414a97f11f71dd57e401930e2aaa28532b3aadddd950`.
+  Keine Flash-/Fahrfreigabe aus diesem Softwareergebnis ableiten.
+- `g30_target_profile.h` bereitet Standalone-Start mit gemessenen
+  Konstanten vor, ohne neue persistente Flashseiten. Unbekannte G30-Felder
+  sind Null. Positive Profilwerte wurden explizit als Test-Fixture in
+  separaten Host-/ARM-Laeufen verwendet, nicht in den Kandidaten uebernommen.
+- DRV126-Originaldump erneut lokal gelesen und SHA256 gegen bekannte Referenz
+  bestaetigt. Begrenzte Bootroutinen-Analyse zeigt Staging-Kopie und
+  App-Handoff, aber keinen Nachweis eines app-unabhaengigen UART-Rettungswegs.
+  Das private Abbild wurde nicht veroeffentlicht; Referenzdump identifiziert
+  nicht automatisch den aktuell eingebauten Loader.
+- Letzter Entwicklungszweig-Commit `6417e1ac5488e31a7ac60b07814d650099e58996`
+  ergaenzt nur Uebergabe-Dokumentation. Quellinhalt bleibt der getestete.
+- Naechste benoetigte reale Angaben: aktuell installierte Firmware und
+  tatsaechlicher Flashtransport des DeltaESC-Zielcontrollers, danach
+  Rueckflash-Nachweis ohne ST-Link und gemessene G30-Motordaten. Keine
+  weitere Motorentwicklungs-Zustimmung ist offen.
 
 ## Historischer Auftrag vom 20.10.2026 / damalige Freigabe
 - Verbindlichen Vertrag hinterlegen.
