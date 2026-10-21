@@ -1,4 +1,15 @@
 # PROJECT_HANDOFF.md — verbindliche Schichtuebergabe
+
+## NEUE VERBINDLICHE ARBEITSANWEISUNG: DeltaEsc 0.10.3 Drive Ready FROZEN (21.10.2026)
+
+**Diese Anweisung hat fuer die weitere Firmwarearbeit Vorrang vor allen aelteren Passagen in diesem Dokument, die noch aktive DeltaESC-Entwicklung, drei parallele Firmwareprojekte oder neue Simulationen vorsehen.**
+
+- **DELTAESC IST JETZT EINGEFROREN.** Benutzerdefinierter Freeze-Name: **`DeltaEsc 0.10.3 Drive Ready`**. Quelle: [Freeze-Branch](https://github.com/ZachWay9bot/DeltaESC-G30D/tree/freeze/deltaesc-0.10.3-drive-ready), [detailliertes Freeze-Protokoll](https://github.com/ZachWay9bot/DeltaESC-G30D/blob/freeze/deltaesc-0.10.3-drive-ready/docs/DELTAESC_0_10_3_DRIVE_READY_FREEZE.md). Exakter erfolgreich softwaregetesteter **Firmware-Source-Commit** `26629227ad7cc882fb3f68426153c83767ce5e3e`; Freeze-Branch aus Dokumentationsstand `3f74686b9fbf9455bdea25ab2ca2eed7a1bd65bb`, Freeze-Protokoll commit `5947dde8f2eb3db35834fbd28c2dadb1823f0761`. PR [#21](https://github.com/ZachWay9bot/DeltaESC-G30D/pull/21) ist Draft/FROZEN, **nicht mergen**.
+- **DeltaESC nicht weiter entwickeln, refaktorieren, optimieren, synchronisieren, flashen, mergen oder fuer neue Experimente verwenden, bis der Nutzer es ausdruecklich wieder freigibt.** Keine neuen DeltaESC-Source-PRs, keine weiteren DeltaESC-Test-Jobs auf Verdacht. Auf das historische FO7x-IAP-/Rueckflashproblem keine neue Sperrlogik bauen. ST-Link ist physisch unmoeglich.
+- **`Drive Ready` ist ein Name fuer einen getesteten SOFTWARE-FREEZE, KEINE reale G30-Fahr-/Flash-/Rueckflashfreigabe.** Gruene exakte CI vom Motor-Source-Commit: [Motor/ARM 39629916521](https://github.com/ZachWay9bot/DeltaESC-G30D/actions/runs/39629916521), [Quell-Audit 39629916571](https://github.com/ZachWay9bot/DeltaESC-G30D/actions/runs/39629916571), [UART/IAP-Audit 39629916747](https://github.com/ZachWay9bot/DeltaESC-G30D/actions/runs/39629916747).
+- **Ab sofort nur noch die beiden verbleibenden Firmwareprojekte EBiCS und SmartESC bearbeiten.** Einziger aktiver gemeinsamer Entwicklungs-Task: [IntheLoopRemoteLab Issue #1: EBiCS + SmartESC fertigstellen](https://github.com/ZachWay9bot/IntheLoopRemoteLab/issues/1). Dieser Task legt Scope, Erfolgsbedingungen und Nicht-Verhandelbares fest. Dort weiterarbeiten, nicht erneut bei DeltaESC beginnen.
+- Originale Flash-/IAP-/Recoverypfade von EBiCS und SmartESC bleiben ebenfalls unangetastet; keine Umgehung des Release-HOLD ohne Nutzerentscheidung. Ausschliesslich Software/Quelltests bis separate reale Hardwarefreigabe. Keine neue Virtual-Controller-Simulation als Ziel.
+
 Stand: 2026-10-20
 Contract: [PROJECT_CONTRACT.md](PROJECT_CONTRACT.md), Version 1.0
 
