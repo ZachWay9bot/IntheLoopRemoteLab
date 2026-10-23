@@ -1,5 +1,18 @@
 # PROJECT_HANDOFF.md — verbindliche Schichtuebergabe
 
+## AKTUELL: EBiCS Android nur Konfiguration, Stock-Dash faehrt (23.10.2026)
+
+**Neue ausdrueckliche Nutzeranforderung und Korrektur des bisherigen Drive-Step2-Workflows. Hat Vorrang vor allen aelteren Beschreibungen einer benoetigten Android-/BLE-Fahrfreigabe.**
+
+- Android-App soll ein **VESC-Tool-artiger Konfigurator** werden: Battery Amps, Phase/Motor Amps, Motor R/L/Flux und weitere FOC-Koeffizienten, Batteriespannung/Unter-/Ueberspannung, Rampen, Motor-Detect, Diagnosen und Readback. Batterie-Ampere und Motor/Phasen-Ampere sind **verschiedene physikalische Limits**; nicht gleichsetzen.
+- **Der normale Fahrbetrieb wird ohne Android-App, Handy oder BLE ueber das originale Ninebot-Dashboard gesteuert.** Gas, Bremse, Coast, neuer Rollstart bei ca. 3 km/h und Timeout-/Faultschutz gehoeren in die ESC-Firmware. Kein App-Knopf oder `0xBA=5` pro Fahrt.
+- **Ist-Stand im Source wirklich geprueft:** r9-Step2-App kann ABI1-JSON-Motorprofil mit 18 Float-Parametern importieren und per One-Shot-RPC 112 Bytes mit UID+CRC ins ESC-**RAM** senden. `g30_motor_service_profile()` hat `max_iq` 0.1–3.0 A, separaten `trip_current` 0.5–12 A, `bus_min` 25–40 V, `bus_max` 26–43 V und weitere Profil-/Messqualifikationen. Keine separate Battery-Current-Max-Begrenzung, kein echtes persistentes ESC-Profil, kein vollwertiger UI-Konfigurationseditor. Diese fehlenden Funktionen **nicht** als bereits vorhanden darstellen.
+- Parametereinstellungen duerfen die Hardware-/Stromschutzgrenzen nicht ungeprueft ausweiten; Aenderung nur bei sicher ausgeschaltetem Leistungszweig und bestaetigtem Readback. Eine persistente Flash-Ablage **nicht** vor belastbarem Loader-/Staging-/Rueckflash-Nachweis einfuehren. Bestehendes IAP/UART/Boot/Recovery unangetastet. ST-Link am Ziel nicht moeglich. App-lokale Profilspeicherung und manuelles Laden nach Reset sind moegliche Zwischenstufe, aber nicht gleichbedeutend mit autonomem Normalfahren.
+- Der bisherige Drive-Step2-Android-`armDrive` ist ein **expliziter Bench-Servicepfad, nicht Produkt-UX**. Fuer Serien-/Normalfahrt sicheren dashboardautonomen Arm-/Drive-State separat in EBiCS entwickeln und echt testen. Kein unbeabsichtigter Selbststart.
+- Vollstaendiger verbindlicher [Auftrag/Status](https://github.com/ZachWay9bot/IntheLoopRemoteLab/issues/1#issuecomment-6371953301). Zuerst neueren 20.10.-r9-Quellstand byteweise mit isoliertem 18.10.-Step2-Code abgleichen, dann Umsetzung in einer eigenen EBiCS-Quelle.
+- **`DeltaEsc 0.10.3 Drive Ready` bleibt FROZEN.** Diese Dokumentationskorrektur ist **keine** EBiCS-Quellimplementierung oder Hardwarefreigabe.
+
+
 ## AKTUELLER EBiCS-ARBEITSSTAND — DRIVE STEP 2 (23.10.2026)
 
 **Dies ist die aktuelle EBiCS-Softwareübergabe; ältere Aussagen unten zu r8 als einziger erreichbarer Quelle, r9 stets SOURCE BLOCKED oder nur geplantem DRIVE ARM sind historisch und nicht der neue Arbeitsstand.**
