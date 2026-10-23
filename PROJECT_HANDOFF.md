@@ -1,5 +1,20 @@
 # PROJECT_HANDOFF.md — verbindliche Schichtuebergabe
 
+## AKTUELLER EBiCS-ARBEITSSTAND — DRIVE STEP 2 (23.10.2026)
+
+**Dies ist die aktuelle EBiCS-Softwareübergabe; ältere Aussagen unten zu r8 als einziger erreichbarer Quelle, r9 stets SOURCE BLOCKED oder nur geplantem DRIVE ARM sind historisch und nicht der neue Arbeitsstand.**
+
+- Basis ist das wirklich materialisierte Original `G30_EBiCS_r9_FO76_GOVERNOR_BUILT_SOURCE_20261018.zip` (SHA256 `7c4125fdfcd2744da25fa69ab0f1861ea0a65eb429e671754fb41e536fecf4e9`) mit dem zuvor erfolgreich getesteten r9 **DRIVE STEP 1** (Quell-ZIP SHA256 `b450c46775885356bd49188b03967374a85fbd6f75ccb08791b79c11a7b52d62`).
+- NEU erstellt: `EBiCS_r9_Drive_Step2_FULL_SOURCE_TESTS_20261023.zip` (im Chat bereitgestellt, **nicht in GitHub als Firmwarequelle eingecheckt**), 2.746.350 Bytes, SHA256 `2addf3f1c6e1fe3fef7ed91e1c6fbb4bd796c0df2ffc4cd0168bf7010fb50724`. Vollständige Firmware-/Android-Quellen, Patches, Native/ARM-/App-/BLE-Tests, Logs, deutsche Abnahme, Baselinevergleich.
+- Firmware-DRIVE hat den separaten bestehenden Modus `0xBA=5` nur nach `0xBC`-One-Shot-Ticket; App erkennt Motorservice-State 4, kann ihn nun durch explizite Bestätigung nach UID-CRC-/Benchmark-/Neutral-/Brake-/Stillstandqualifikation per vorhandener Registerbrücke starten und STOP ausführen. Kein Auto-Arm, kein erneuter Start bei fehlendem ACK.
+- Neu im echten `Firmware/src/main.c`: Stock-Dashboard-Gas, Bremse und Zeitstempel werden PRIMASK-atomar verarbeitet; bei Brake/Neutral werden Gates auf Coast gesetzt, bevor ADC-IRQ-Wiederfreigabe erfolgt. Keine Änderungen an IAP, UART-Protokoll, Linker, STM32-Hardwarebackend, TIM1-PWM-Implementierung oder Android BLE/Crypto/Manifest.
+- `RUN_DRIVE_STEP2_ALL.sh` PASS: Original native Motorservice-/Governor-/2/4-kHz-FOC-/Brake-/Rearm-/Timeouttests, produktiver `rpc_write` One-Shot-RPC-Test, echter Dashboard-`0x61/0x64/0x65`-/BMS-Parserhosttest inkl. SOC und 2-s-Frische, Android Crypto/BLE-JVM-Mocks, 81 neue DRIVE-App-Assertions und 15 UI-/Permissions-Assertions, kompletter ARM Cortex-M3 ELF/BIN Link und SHU-v3-Formatpakettest. Full-Source-Safety-Diff PASS.
+- Neue **UNQUALIFIED** BIN: 41.660 Bytes SHA256 `6fee4edfd402c9c6b712ea60d1e0cf50da90aa57631b6a3811342e47439acb4c`. Original-Buildskript nennt das neue Image historisch weiterhin `FO76_GOVERNOR`; niemals als das alte reale FO76-Original bezeichnen und **NICHT FLASHEN**.
+- **Weiter OFFEN**: (1) Rohbytes und exakter Diff zu `G30_EBiCS_r9_RECOVERY_INVARIANT_SOURCE_20261020.zip`, (2) echter G30-Motor und IAP-Rueckflash ohne physisch nicht moeglichen ST-Link, (3) Strom-/ADC-/Deadtime-/Phasen-/15-Polpaar-Geometriepruefung, (4) native km/h-Dash-Ausgabe und realer BMS-/Dashboard-/ACK-/Heartbeat-Test, (5) Android-APK mit SDK Build-Tools real bauen und telefonisch testen. Kein Hardware-/Realfahrbetrieb nachgewiesen. Bitte diese Punkte nicht als abgeschlossen behandeln.
+- Detaillierter, überprüfter [EBiCS GitHub Task-/Abnahmebericht](https://github.com/ZachWay9bot/IntheLoopRemoteLab/issues/1#issuecomment-6354422125). **Nur** der Bericht liegt auf GitHub; fuer den kompletten Firmware-Source-Push fehlt weiterhin ein eigenes EBiCS-Repository. Nicht auf das DeltaESC- oder SmartESC-Firmware-Repo ausweichen.
+- `DeltaEsc 0.10.3 Drive Ready` bleibt **FROZEN**; SmartESC unberührt.
+
+
 ## NEUE VERBINDLICHE ARBEITSANWEISUNG: DeltaEsc 0.10.3 Drive Ready FROZEN (21.10.2026)
 
 **Diese Anweisung hat fuer die weitere Firmwarearbeit Vorrang vor allen aelteren Passagen in diesem Dokument, die noch aktive DeltaESC-Entwicklung, drei parallele Firmwareprojekte oder neue Simulationen vorsehen.**
