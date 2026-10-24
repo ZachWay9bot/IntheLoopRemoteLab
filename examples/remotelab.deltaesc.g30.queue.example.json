@@ -1,7 +1,7 @@
 {
   "queue": {
-    "repo": "ZachWay9bot/DeltaESC-G30D",
-    "issue": 22,
+    "repo": "OWNER/PRIVATE_G30_QUEUE_REPO",
+    "issue": 1,
     "operator": "ZachWay9bot"
   },
   "poll_seconds": 8,
@@ -12,7 +12,9 @@
       "module": "remotelab.adapters.deltaesc",
       "class": "DeltaEscReadOnlyAdapter",
       "enabled": true,
-      "args": {"port": "COM9"}
+      "args": {
+        "port": "COM9"
+      }
     }
   ]
 }
