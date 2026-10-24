@@ -1,1 +1,3 @@
-from .github_token import load_github_token\n\n__all__ = ["load_github_token"]\n
+from .github_token import load_github_token
+
+__all__ = ["load_github_token"]
