@@ -1,0 +1,34 @@
+{
+  "queue": {
+    "repo": "OWNER/PRIVATE_REMOTE_QUEUE_REPO",
+    "issue": 1,
+    "operator": "ZachWay9bot"
+  },
+  "poll_seconds": 8,
+  "state_file": "runtime/tds200_queue_state.json",
+  "audit_file": "runtime/tds200_audit.jsonl",
+  "adapters": [
+    {
+      "module": "remotelab.adapters.tds200",
+      "class": "TektronixTDS200Adapter",
+      "enabled": true,
+      "args": {
+        "name": "tds220",
+        "port": "COM11",
+        "baudrate": 9600,
+        "flow_control": "none"
+      }
+    },
+    {
+      "module": "remotelab.adapters.tds200",
+      "class": "TektronixTDS200Adapter",
+      "enabled": false,
+      "args": {
+        "name": "tds210",
+        "port": "COM_PORT_TDS210",
+        "baudrate": 9600,
+        "flow_control": "none"
+      }
+    }
+  ]
+}
