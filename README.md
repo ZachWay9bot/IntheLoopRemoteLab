@@ -63,6 +63,10 @@ Das Job-Protokoll ist unter `docs/JOB_QUEUE_PROTOCOL_DE.md` beschrieben.
 
 Geraetespezifische Hinweise liegen ausschliesslich unter `docs/adapters/`.
 
+- Neu: Tektronix TDS 210/220 RS-232 Adapter (COM11 fuer TDS220), identifizieren,
+  diagnostizieren, messen und Waveform-Kurven lesen. Anleitung:
+  [docs/adapters/tds200.md](docs/adapters/tds200.md).
+
 ## Verbindliche Projektregeln / Schichtuebergabe
 
 - [PROJECT_CONTRACT.md](PROJECT_CONTRACT.md) — freigegebener Entwicklungsvertrag; funktionierende Firmware-/Recoverypfade nicht ungefragt veraendern.
