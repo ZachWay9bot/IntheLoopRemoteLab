@@ -9,7 +9,7 @@ from typing import Iterable
 from remotelab.adapters.base import DeviceAdapter
 
 
-READ_ONLY_OPERATIONS = frozenset({"identify", "diagnose"})
+READ_ONLY_OPERATIONS = frozenset({"identify", "diagnose", "measure", "capture_waveform"})
 
 
 class Engine:
