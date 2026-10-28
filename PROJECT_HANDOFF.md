@@ -1,3 +1,16 @@
+# TDS 210/220 RemoteLab Adapter (28.10.2026)
+
+- **Beauftragt:** Tektronix TDS 210 + TDS 220 als getrennt konfigurierbare RS-232-Adapter fuer IntheLoopRemoteLab integrieren.
+- **Branch:** `feature/tektronix-tds210-tds220-adapter`, Basis main `3c203b6b37f3660fd624cf8d2026c895d8fbdcda`.
+- **Hardware-Fakten:** TDS220 identifizierte sich vor diesem Paket ueber COM11 mit 9600 Baud, 8N1 und Flow Control NONE. TDS210-Port noch unbekannt.
+- **Software:** `TektronixTDS200Adapter` hat identify/diagnose/measure/capture_waveform; Core erlaubt nur die zwei neuen benannten Leseoperationen zusaetzlich; bestehende ESC-/Flashadapter und IAP unberuehrt. Optional pyserial.
+- **Tests:** 8 neue Fake-Serial-Unit-Tests, ohne echte Oszi-Hardware. Kein echter Wellenform-/Messwerttest mit der neuen Version erfolgt; CI-Ergebnis im Pull Request.
+- **Offen:** Echter COM11-Test, TDS210-Port bestimmen und pruefen, TDS210-Kommunikation, Wellenformskalierung, Datenuebertragungsdauer.
+- **Dokumentation:** `docs/adapters/tds200.md`, `examples/remotelab.tds200.queue.example.json`, `tools/tds200_probe.py`. Queue weiterhin nur privat.
+- **Naechste Schritte:** PR-CI, lokal `py -m tools.tds200_probe --port COM11 --action identify`, danach diagnose/measure/capture_waveform; erst dann TDS210 aktivieren.
+
+---
+
 # PROJECT_HANDOFF.md — verbindliche Schichtuebergabe
 
 ## NEUESTE EBiCS-ÜBERGABE: Drive Step 3 StockDash AutoDrive (23.10.2026)

@@ -46,8 +46,10 @@ Damit bleibt der Transport fuer spaetere Hardware-Schreiboperationen at-most-onc
 
 - `identify`
 - `diagnose`
+- `measure` (ausgewaehlte Lese-Messungen, nur mit passendem Adapter)
+- `capture_waveform` (gelesene Spannungs/Zeit-Daten, nur mit passendem Adapter)
 
-Weitere Operationen werden erst ueber Policies freigegeben.
+Alle anderen Operationen bleiben gesperrt. Die Adapter muessen jede zusaetzliche Methode selbst bereitstellen; die vorhandenen ESC-Adapter werden nicht veraendert.
 
 ## Beispiel
 
